@@ -48,8 +48,7 @@ A simple, maintainable data system that:
 ## 2. Database Architecture
 
 ### Entity-Relationship Diagram (ERD)
-
-![ERD Diagram](HOD_junior_church_ERD.png)
+![ERD Diagram](https://github.com/Ccinaza/HOD-junior-church-project/blob/main/images/HOD_junior_church_ERD.png)
 
 ### Design Principles
 
@@ -158,8 +157,8 @@ Tracks individual child attendance at each service
 **Notes:**
 
 * Unique constraint on `(child_id, service_name, attendance_date)` prevents duplicates
-* Same child can attend multiple services on same date (creates separate records)
-* ON DELETE CASCADE: Deleting child removes their attendance records
+* Same child can attend multiple services on the same date (creates separate records)
+* ON DELETE CASCADE: Deleting a child removes their attendance records
 
 ---
 
@@ -184,15 +183,15 @@ Tracks individual child attendance at each service
 ### Migration Steps
 
 1. Data was extracted from Excel sheets
-2. Parents data were deduplicated using phone number
-3. Children data were normalized into individual records
+2. Parents' data were deduplicated using phone number
+3. Children's data were normalized into individual records
 4. Attendance records were inserted per service and date
 5. Cleaned data was loaded into PostgreSQL
 
 ### Outcome
 
 * Duplicate parent records eliminated
-* Children stored once per parent
+* Children are stored once per parent
 * Attendance history preserved per service
 
 This migration is **one‑time only**.
@@ -203,10 +202,10 @@ This migration is **one‑time only**.
 
 ### Overview
 
-Weekly attendance is collected using Google Forms and processed automatically without manual intervention.
+Weekly attendance is collected using Google Forms and processed automatically, eliminating the need for manual intervention.
 
 ### Workflow
-![Proposed Workflow](proposed_workflow.png)
+![Proposed Workflow](https://github.com/Ccinaza/HOD-junior-church-project/blob/main/images/proposed_workflow.png)
 
 ```
 Google Form Submission
@@ -265,7 +264,7 @@ The system automatically handles first-time attendees:
 
 **Data Quality:**
 - Invalid genders default to "Male"
-- Missing timestamps default to current date
+- Missing timestamps default to the current date
 - Empty child fields are skipped (not all 3 child slots required)
 
 ### Why CSV Export (No OAuth)
@@ -273,8 +272,8 @@ The system automatically handles first-time attendees:
 To keep the system simple and fully automated:
 
 * No Google account authentication required
-* No credential rotation or browser authorization
-* Script can run on any machine or server
+* No credential rotation or browser authorisation
+* The script can run on any machine or server
 
 The Google Sheet is shared as **read‑only** and accessed via its public CSV export URL.
 
@@ -282,13 +281,13 @@ The Google Sheet is shared as **read‑only** and accessed via its public CSV ex
 
 ### ETL Logic (Weekly)
 
-1. Download latest form responses via CSV URL
+1. Download the latest form responses via CSV URL
 2. For each submission:
 
    * Match parent by phone number (create if missing)
    * Match child by parent + name + age (create if missing)
    * Insert attendance record (skip if already exists)
-3. Commit updates to database
+3. Commit updates to the database
 
 The process is **idempotent** — running it multiple times does not create duplicates.
 
@@ -335,12 +334,12 @@ The process is **idempotent** — running it multiple times does not create dupl
    - Includes parent emergency contacts
 
 5. **Weekly Attendance Trends (Line Chart)** (To be Included)
-   - Shows attendance over past 12 weeks
+   - Shows attendance over time
    - Identifies growth or decline trends
 
 ### Data Freshness
 
-* Dashboard reflects latest database state
+* Dashboard reflects the latest database state
 * Updates automatically after ETL runs
 
 ---
